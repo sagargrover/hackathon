@@ -1,7 +1,8 @@
 class UserController < ApplicationController
 	skip_before_filter :verify_authenticity_token 
 	def new_user
-		flag = User.create params[:user_id], params[:fb_auth_token], params[:name]
+		params_json = JSON.parse params
+		flag = User.create params_json['id'], params_json['access_token'], params_json['name']
 		if flag == 1
       render :json => {:messages => "Saved"}, :status => :ok
 	  else

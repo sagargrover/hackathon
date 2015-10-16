@@ -1,5 +1,4 @@
 class UserController < ApplicationController
-  include SearchHelper
 	skip_before_filter :verify_authenticity_token 
 	def new_user
 		flag = User.create params[:user_id], params[:fb_auth_token], params[:name]
@@ -26,7 +25,8 @@ class UserController < ApplicationController
 	end
 
   def suggest
-    hits = search_handles(params[:input])
+    ilike="handle ilike '%s'" % [params[:input]]
+    hits=User.where(ilike).select('user_id,name,handle').order(:handle)
     process_response(hits,200,params)
   end
 

@@ -48,13 +48,13 @@ module NearbyHelper
     result_seeds_with_nearby.each do |raw_seed|
       seed=Hash.new
       puts raw_seed.attributes
-      seed.merge!(raw_seed.attributes.slice('title','url','nearby','is_public','lat','lng'))
+      seed.merge!(raw_seed.attributes)
       
       lat = raw_seed.lat
       lng = raw_seed.lng
       
       seed['address'] = address_builder(lat,lng)
-      seed['tags'] = raw_seed.taghandles
+      seed['taglist'] = raw_seed.taghandles
       seed['posted_by'] = raw_seed.creator_handle
 
       result << seed

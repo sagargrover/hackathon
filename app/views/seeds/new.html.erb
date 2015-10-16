@@ -1,0 +1,17 @@
+<h1>New Seed</h1>
+
+<%= form_for :seed do |f| %>
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= f.label :creator_id %><br>
+    <%= f.text_area :creator_id %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

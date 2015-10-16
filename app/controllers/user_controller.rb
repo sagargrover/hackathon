@@ -30,6 +30,10 @@ class UserController < ApplicationController
     process_response(hits,200,params)
   end
 
+  def saw
+    User.find_by(user_id:params[:user_id]).saw(params[:seed_id])
+  end
+
 	private
 	def process_response response, status, params
     if status == 200

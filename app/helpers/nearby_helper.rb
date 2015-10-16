@@ -20,7 +20,7 @@ module NearbyHelper
 
     distance = "ST_Distance(ST_Transform(coordinates,3785),ST_Transform(%s,3785))" % [my_loc]
 
-    selection_with_nearby = "id,title,url,is_public as public,
+    selection_with_nearby = "id,title,url,is_public as public,creator_id,
                 ST_Y(coordinates) as lat,
                 ST_X(coordinates) as lng,
                 %s < #{LISTENING_RADIUS} as nearby,
@@ -48,7 +48,7 @@ module NearbyHelper
     result_seeds_with_nearby.each do |raw_seed|
       seed=Hash.new
       puts raw_seed.attributes
-      seed.merge!(raw_seed.attributes)
+      seed.merge!(raw_seed.attributes.slice('id','lat','lng','title','url','is_public','nearby','distance'))
       
       lat = raw_seed.lat
       lng = raw_seed.lng

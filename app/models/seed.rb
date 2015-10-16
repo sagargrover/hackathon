@@ -12,7 +12,7 @@ class Seed < ActiveRecord::Base
   end
 
   def viewers
-    User.joins("inner join seens on users.user_id=seens.user_id").where("seen.seed_id=#{id}").select("users.*")
+    User.joins("inner join seens on users.user_id=seens.user_id").where("seens.seed_id=#{id}").select("users.*")
   end
 
   def viewcount

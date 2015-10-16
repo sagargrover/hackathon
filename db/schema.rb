@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016152438) do
+ActiveRecord::Schema.define(version: 20151016135522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(version: 20151016152438) do
     t.spatial  "coordinates", limit: {:srid=>4326, :type=>"point"}
   end
 
-  create_table "seens", force: true do |t|
+  create_table "seens", id: false, force: true do |t|
+    t.integer  "id",         default: "nextval('seens_id_seq'::regclass)", null: false
     t.integer  "seed_id"
     t.integer  "user_id"
     t.datetime "created_at"

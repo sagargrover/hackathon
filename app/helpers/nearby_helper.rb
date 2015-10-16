@@ -13,7 +13,7 @@ module NearbyHelper
     
     range_seeds = Seed.where(range_condition)
     
-    tagged_condition = "id in (select seed_id from tags where tagged_user_id = %s)" % [user_id]
+    tagged_condition = "id in (select seed_id from tags where tagged_user_id = '%s')" % [user_id]
     visible_condition = "is_public or %s" % [tagged_condition]
     
     result_seeds = range_seeds.where(visible_condition)

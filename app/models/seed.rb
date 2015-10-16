@@ -8,6 +8,6 @@ class Seed < ActiveRecord::Base
   end
 
   def creator_handle
-  	User.find_by(user_id:self.creator_id).handle
+  	User.find_by(user_id:creator_id).handle
   end
 end

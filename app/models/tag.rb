@@ -17,15 +17,17 @@ class Tag < ActiveRecord::Base
 			seed.creator_id = user_id
 			#binding.pry
 			seed.save!
-			query =  "INSERT INTO seeds(coordinates ) VALUES( ST_GeomFromText('POINT(#{lng} #{lat})', 4326))"
+			query =  "UPDATE seeds SET coordinates  = ST_GeomFromText('POINT(#{lng} #{lat})', 4326) where id = #{seed.id}"
 			Seed.connection.execute(query)
 			tag = Tag.new
+			tag.seed_id = seed.id
 			tag.tagged_user_id = user_id
 			tag.tagger_user_id = user_id
 			tag.save!
 			if !(tag_ids.nil?)
 				tag_ids.each do |tag_id|
 					tag = Tag.new
+					tag.seed_id = seed.id
 					tag.tagged_user_id = tag_id
 					tag.tagger_user_id = user_id
 					tag.save!

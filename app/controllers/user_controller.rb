@@ -14,4 +14,28 @@ class UserController < ApplicationController
 		render :json => {:handle => handle}, :status => :ok
 	end
 
+	def myplants
+		mine=User.find_by(user_id:params[:user_id]).myplants
+		process_response(mine,200,params)
+	end
+
+	def myseeds
+		mine=User.find_by(user_id:params[:user_id]).myseeds
+		process_response(mine,200,params)
+	end
+
+	private
+	def process_response response, status, params
+    if status == 200
+      render json: response, status: status, callback: params[:callback]
+    elsif status == 500
+      raise response
+    else
+      handle_logging(response, status, params)
+      render json: RESPONSE[status], status: status, callback: params[:callback]
+    end
+  end
+
+  def init_api # :nodoc:
+  end
 end

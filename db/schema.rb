@@ -29,8 +29,7 @@ ActiveRecord::Schema.define(version: 20151016213428) do
     t.integer  "nays",                                              default: 0
   end
 
-  create_table "seens", id: false, force: true do |t|
-    t.integer  "id",         default: "nextval('seens_id_seq'::regclass)", null: false
+  create_table "seens", force: true do |t|
     t.integer  "seed_id"
     t.datetime "created_at"
     t.datetime "updated_at"

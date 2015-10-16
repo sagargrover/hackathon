@@ -27,7 +27,7 @@ class UserController < ApplicationController
   def suggest
     pattern='%s%' % [params[:input]]
     ilike="handle ilike '%s'" % [pattern]
-    hits=User.where(ilike).select('user_id,name,handle').order(:handle)
+    hits=User.where(ilike).select('user_id,name,handle').order(:handle).limit(5)
     process_response(hits,200,params)
   end
 

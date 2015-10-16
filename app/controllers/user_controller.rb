@@ -25,6 +25,11 @@ class UserController < ApplicationController
 		process_response(mine,200,params)
 	end
 
+  def suggest
+    hits = search_handles(params[:input])
+    process_response(hits,200,params)
+  end
+
 	private
 	def process_response response, status, params
     if status == 200

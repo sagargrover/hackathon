@@ -1,6 +1,4 @@
 class Seed < ActiveRecord::Base
-  validates :name, :creator_id, :coordinates, :presence => true
-
   def taglist
   	Tag.where(seed_id:self.id).pluck(:tagged_user_id)
   end

@@ -6,7 +6,7 @@ Mash::Application.routes.draw do
   post 'seed/register' => 'seeds#register'
 
   post 'user/create_user' => 'user#new_user'
-  get 'user/seeds/:user_id' => 'user#myseeds'
+  get 'user/seed/:user_id' => 'user#myseeds'
   get 'user/plants/:user_id' => 'user#myplants'
   get 'user/get_handle' => 'user#get_handle'
 
@@ -16,6 +16,6 @@ Mash::Application.routes.draw do
 
   get 'user/look/down' => 'user#lookdown'
 
-  post 'api/v1/seeds/nearby' => 'seeds#nearby'
-  get 'api/v1/user/suggest' => 'user#suggest'
+  post 'seed/nearby' => 'seeds#nearby'
+  get 'user/suggest' => 'user#suggest'
 end

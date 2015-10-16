@@ -25,13 +25,23 @@ class SeedsController < ApplicationController
   end
 
 =begin
-  Request Format:
-  {
-    "user" : 1,
-    "loc" : "POINT(70.0001,9.99999)",
-    "ne" : "POINT(71,11)",
-    "sw" : "POINT(69,9)"
+:method: nearby
+<b>Author</b> Harman Singh
+<b>Common Name</b> Nearby
+<b>Short Description</b> Get seeds based on viewport
+<b>Endpoints</b> Android
+<b>Request Type</b> POST
+<b>Route </b> /seed/nearby/
+<b>Authentication Required</b> Public
+<b>Request Format</b> 
+    {
+    "user_id" : 1,
+    "loc" : "POINT(70.0001 19.99999)",
+    "ne" : "POINT(71 21)",
+    "sw" : "POINT(69 19)"
   }
+<b>Response Format</b> all polygons with initials as input is sent in response
+    
 =end
 	def nearby
 		#resp, status = @api.nearby_seeds(params)

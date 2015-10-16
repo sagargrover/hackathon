@@ -43,7 +43,7 @@ module NearbyHelper
     return addr.join(', ')
   end
 
-  def format_nearby_seeds result_seeds_with_nearby
+  def format_nearby_seeds result_seeds_with_nearby, user_id
     result = []
     result_seeds_with_nearby.each do |raw_seed|
       seed=Hash.new

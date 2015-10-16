@@ -1,47 +1,78 @@
+source 'https://7jz8eUPLXyB3hSa6vaRT@repo.fury.io/loconsolutions/'
 source 'https://rubygems.org'
-
-gem 'activerecord-postgis-adapter'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.9'
+gem 'acl_service', '0.0.7'
+gem 'httparty'
+gem 'rack-ssl-enforcer'
+gem 'housing_dply', '0.1.13'
+gem 'uglifier', '2.6.1'
 
-# Use postgresql as the database for Active Record
+gem 'rack-cors', :require => 'rack/cors'
+
+#My custom gems. 
 gem 'pg'
+gem 'activerecord-postgis-adapter'
+gem 'rgeo-geojson'
+gem "redis"
+gem "activerecord-import", '>=0.4.0'
+gem "elasticsearch"
+gem "resque", "~> 1.25.1", :require=>"resque/server"
+gem 'resque-loner'
+gem 'resque-scheduler', '2.5.5'
+gem 'resque-queue-priority', '~> 0.6.2'
+gem 'figaro', '0.7.0'
+gem "bunny"
+gem "sneakers"
+gem 'will_paginate'
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.2'
-
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem "bootstrap-timepicker-rails", "~> 0.1.3"
+gem "bootstrap-datepicker-rails", "1.4.0"
+gem 'jquery-rails', '3.1.3' 
+gem 'jquery-tokeninput-rails'
 gem 'turbolinks'
+gem 'simple_form', '3.1.0'
+gem 'ckeditor'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+#New
+gem "oj", "~> 2.0.14"
+gem "newrelic_rpm"
+gem 'lograge-with-time', '~> 0.4.0', require: 'lograge'
+gem 'dalli'
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+gem 'jquery-ui-rails', '5.0.3'
+gem 'bootstrap-wysiwyg-rails'
+
+# 'bundle exec rake rdoc' generates the API under doc/api.
+gem 'sdoc', '~>0.4.1'
+
+# for implemeting sweepers
+gem 'rails-observers'
+
+group :development do
+  gem "rails-erd"
+  gem 'ruby-prof'
+  gem 'thin'
+  gem "better_errors"
+  gem 'hirb'
+  gem 'awesome_print'#, :require => 'ap'
+  gem 'brakeman'
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+group :development, :test do 
+  gem 'pry', '~> 0.9.12.6'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+end
 
-# Use unicorn as the app server
-# gem 'unicorn'
+group :test do
+  # To send the test coverage report to code climate
+  gem 'minitest'
+  gem 'mocha'
+  gem "codeclimate-test-reporter", require: nil
+end
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
+group :assets do
+  gem 'sprockets', '2.11.0'
+end

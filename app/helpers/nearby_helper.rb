@@ -13,14 +13,16 @@ module NearbyHelper
     
     range_seeds = Seed.where(range_condition)
     
-    tagged_condition = "id in (select seed_id from tags where tagged_id = %s)" % [user_id]
-    visible_condition = "public"# or %s" % [tagged_condition]
+    tagged_condition = "id in (select seed_id from tags where tagged_user_id = %s)" % [user_id]
+    visible_condition = "is_public or %s" % [tagged_condition]
     
     result_seeds = range_seeds.where(visible_condition)
 
     distance = "ST_Distance(ST_Transform(coordinates,3785),ST_Transform(%s,3785))" % [my_loc]
 
-    selection_with_nearby = "id,title,url,public,ST_Y(coordinates) as lat, ST_X(coordinates) as lng, 
+    selection_with_nearby = "id,title,url,is_public as public,
+                ST_Y(coordinates) as lat,
+                ST_X(coordinates) as lng,
                 %s < #{LISTENING_RADIUS} as nearby,
                 %s as distance" % [distance, distance]
   
@@ -46,22 +48,17 @@ module NearbyHelper
     result_seeds_with_nearby.each do |raw_seed|
       seed=Hash.new
       puts raw_seed.attributes
-      seed.merge!(raw_seed.attributes.slice('title','url','nearby','public','lat','lng'))
+      seed.merge!(raw_seed.attributes.slice('title','url','nearby','is_public','lat','lng'))
       
       lat = raw_seed.lat
       lng = raw_seed.lng
-      addr = address_builder(lat,lng)
-
-      #taglist(raw_seed.id)
       
-      seed['address'] = addr
+      seed['address'] = address_builder(lat,lng)
+      seed['tags'] = raw_seed.taghandles
+      seed['posted_by'] = raw_seed.creator_handle
 
       result << seed
     end
     result
-  end
-
-  def taglist seed_id
-    Tag.where(seed_id:seed_id).pluck(tagged_id)
   end
 end

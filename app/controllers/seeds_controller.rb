@@ -42,6 +42,18 @@ class SeedsController < ApplicationController
       end
     end
 
+  def log_file(file_name = "Polygon")
+    file_str = File.join "#{Rails.root}","log", "#{file_name}.log"
+    File.new(file_str,"w") unless File.exists?(file_str)
+    log_file = Logger.new(file_str)
+    log_file
+  end
+
+  def handle_logging response, status, params
+    action = params["action"]
+    log_file.error "#{action} || #{status} || #{response} || #{params.except!("controller","action")}"
+  end
+
   def init_api # :nodoc:
   end
 end

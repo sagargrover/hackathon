@@ -12,6 +12,8 @@ Mash::Application.routes.draw do
 
   put 'user/:user_id/saw/:seed_id' => 'seen#create'
 
+  get 'user/look/down' => 'user#lookdown'
+
   post 'api/v1/seeds/nearby' => 'seeds#nearby'
   get 'api/v1/user/suggest' => 'user#suggest'
 end

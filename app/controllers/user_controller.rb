@@ -30,13 +30,17 @@ class UserController < ApplicationController
     process_response(hits,200,params)
   end
 
+  def lookdown
+    process_response("No, no, no. Look Up.",418,params)
+  end
+
   def saw
     User.find_by(user_id:params[:user_id]).saw(params[:seed_id])
   end
 
 	private
 	def process_response response, status, params
-    if status == 200
+    if status == 200 || status == 418
       render json: response, status: status, callback: params[:callback]
     elsif status == 500
       raise response
@@ -44,6 +48,18 @@ class UserController < ApplicationController
       handle_logging(response, status, params)
       render json: RESPONSE[status], status: status, callback: params[:callback]
     end
+  end
+
+  def log_file(file_name = "Polygon")
+    file_str = File.join "#{Rails.root}","log", "#{file_name}.log"
+    File.new(file_str,"w") unless File.exists?(file_str)
+    log_file = Logger.new(file_str)
+    log_file
+  end
+
+  def handle_logging response, status, params
+    action = params["action"]
+    log_file.error "#{action} || #{status} || #{response} || #{params.except!("controller","action")}"
   end
 
   def init_api # :nodoc:

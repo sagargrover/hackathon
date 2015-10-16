@@ -15,6 +15,8 @@ class Tag < ActiveRecord::Base
 			seed.url = link
 			seed.creator_id = user_id
 			seed.save!
+			query =  "INSERT INTO seeds(coordinates ) VALUES( ST_GeomFromText('POINT(#{lng} #{lat})', 4326))"
+			Seed.connection.execute(query)
 			tag = Tag.new
 			tag.tagged_user_id = user_id
 			tag.tagger_user_id = user_id

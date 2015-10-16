@@ -3,6 +3,7 @@ class Tag < ActiveRecord::Base
 		#binding.pry
 		link = SecureRandom.hex(10)
 		user = User.find_by_user_id(user_id)
+		#binding.pry
 		if user.auth_token != fb_auth_id
 			return "Wrong authentication", 0
 		end
@@ -14,6 +15,7 @@ class Tag < ActiveRecord::Base
 			seed.is_public = seed_type
 			seed.url = link
 			seed.creator_id = user_id
+			#binding.pry
 			seed.save!
 			query =  "INSERT INTO seeds(coordinates ) VALUES( ST_GeomFromText('POINT(#{lng} #{lat})', 4326))"
 			Seed.connection.execute(query)

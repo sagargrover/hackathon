@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     Seed.where(creator_id:self.user_id)
   end
 
-  def plantsforme
+  def myseeds
     Seed.joins("inner join tags on seed_id=seeds.id").where(creator_id:self.user_id).select("seeds.*")
   end
 

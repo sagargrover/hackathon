@@ -22,7 +22,7 @@ class SeedsController < ApplicationController
 =end
 	def nearby
 		#resp, status = @api.nearby_seeds(params)
-    user_id=params[:user]
+    user_id=params[:user_id]
     my_loc=params[:loc]
     bounds_ne=params[:ne]
     bounds_sw=params[:sw]

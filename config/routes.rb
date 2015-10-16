@@ -11,6 +11,8 @@ Mash::Application.routes.draw do
   get 'user/get_handle' => 'user#get_handle'
 
   put 'user/:user_id/saw/:seed_id' => 'seen#create'
+  put 'seed/:seed_id/like' => 'seeds#like'
+  put 'seed/:seed_id/dislike' => 'seeds#dislike'
 
   get 'user/look/down' => 'user#lookdown'
 

@@ -18,4 +18,24 @@ class Seed < ActiveRecord::Base
   def viewcount
     viewers.count
   end
+
+  def yay
+    increment!(:yays)
+  end
+
+  def nay
+    increment!(:nays)
+  end
+
+  def self.yay
+    self.find_each do |seed|
+      seed.increment!(:yays)
+    end
+  end
+
+  def self.nay
+    self.find_each do |seed|
+      increment!(:nays)
+    end
+  end
 end

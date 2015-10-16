@@ -30,6 +30,16 @@ class SeedsController < ApplicationController
     process_response(resp, status, params)
 	end
 
+  def like
+    Seed.find_by(id:params[:seed_id]).yay
+    render :json => {:message => "Yay!"}, :status => :ok
+  end
+
+  def dislike
+    Seed.find_by(id:params[:seed_id]).nay
+    render :json => {:message => "Nay!"}, :status => :ok
+  end
+
 	private
 	def process_response response, status, params
       if status == 200

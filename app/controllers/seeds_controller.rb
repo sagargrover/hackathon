@@ -51,7 +51,6 @@ class SeedsController < ApplicationController
     bounds_ne=params_json['ne']
     bounds_sw=params_json['sw']
     resp,status=nearby_seeds(user_id,my_loc,bounds_ne,bounds_sw)
-    binding.pry
     process_response(resp, status, params)
 	end
 

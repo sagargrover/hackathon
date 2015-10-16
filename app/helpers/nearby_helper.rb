@@ -28,7 +28,7 @@ module NearbyHelper
   
     result_seeds_with_nearby = result_seeds.select(selection_with_nearby)
 
-    return format_nearby_seeds(result_seeds_with_nearby),200
+    return format_nearby_seeds(result_seeds_with_nearby,user_id),200
   end
 
   def address_builder lat, lng
@@ -56,6 +56,7 @@ module NearbyHelper
       seed['address'] = address_builder(lat,lng)
       seed['taglist'] = raw_seed.taghandles
       seed['posted_by'] = raw_seed.creator_handle
+      seed['seen'] = raw_seed.viewers.exists?(:user_id=>user_id)
 
       result << seed
     end

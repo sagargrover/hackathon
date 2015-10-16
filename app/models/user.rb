@@ -34,4 +34,12 @@ class User < ActiveRecord::Base
       return numeral.to_i + 1
     end
   end
+
+  def seen
+    Seed.joins("inner join seens on seeds.seed_id=seens.seeds_id").where("seens.user_id=#{user_id}").select("seeds.*")
+  end
+
+  def seencount
+    seen.count
+  end
 end

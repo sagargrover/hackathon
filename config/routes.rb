@@ -3,7 +3,7 @@ Mash::Application.routes.draw do
   root 'welcome#index'
   resources :seeds
   
-  post 'tag/register_video' => 'tag#register_video'
+  post 'seed/register' => 'seeds#register'
 
   post 'user/create_user' => 'user#new_user'
   get 'user/seeds/:user_id' => 'user#myseeds'

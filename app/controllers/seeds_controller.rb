@@ -4,12 +4,25 @@ class SeedsController < ApplicationController
   skip_before_filter :verify_authenticity_token 
 	before_action :init_api
 
-	def new
-	end
-
-	def create
-	end
-
+=begin
+  {
+    "user_id": "124",
+    "fb_auth_id" : "123",
+    "tag_ids" : [123,124],
+    "lat": "20",
+    "lng": "70",
+    "title": "title",
+    "seed_type": "true"
+  } 
+=end
+  def register
+    url, status = Seed.register params[:user_id], params[:fb_auth_id], params[:tag_ids], params[:lat], params[:lng], params[:title], params[:seed_type]
+    if status == 1
+      render :json => {:url => url}, :status => 200
+    else
+      render :json => {:url => "Problem"}, :status => 402
+    end
+  end
 
 =begin
   Request Format:

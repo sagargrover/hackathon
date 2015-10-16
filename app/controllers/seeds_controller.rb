@@ -42,7 +42,6 @@ class SeedsController < ApplicationController
       end
     end
 
-    def init_api # :nodoc:
-
-    end
+  def init_api # :nodoc:
+  end
 end

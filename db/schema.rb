@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016073255) do
+
+ActiveRecord::Schema.define(version: 20151016075540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+
+  create_table "seeds", force: true do |t|
+    t.string   "title"
+    t.boolean  "public"
+    t.string   "url"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "coordinates", limit: {:srid=>4326, :type=>"point"}
+  end
 
   create_table "users", force: true do |t|
     t.string "handle"

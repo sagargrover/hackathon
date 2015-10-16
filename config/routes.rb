@@ -3,7 +3,7 @@ Mash::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+   root 'welcome#index'
 
   # Example of regular route:
      post 'user/create_user' => 'user#new_user'
@@ -12,7 +12,7 @@ Mash::Application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+    resources :seeds
 
   # Example resource route with options:
   #   resources :products do

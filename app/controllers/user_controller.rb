@@ -25,7 +25,8 @@ class UserController < ApplicationController
 	end
 
   def suggest
-    ilike="handle ilike '%s'" % [params[:input]]
+    pattern='%s%' % [params[:input]]
+    ilike="handle ilike '%s'" % [pattern]
     hits=User.where(ilike).select('user_id,name,handle').order(:handle)
     process_response(hits,200,params)
   end

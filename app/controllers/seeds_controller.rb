@@ -1,5 +1,6 @@
 class SeedsController < ApplicationController
   include SeedsHelper
+  include NearbyHelper
   skip_before_filter :verify_authenticity_token 
 	before_action :init_api
 

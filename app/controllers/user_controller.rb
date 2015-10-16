@@ -9,4 +9,9 @@ class UserController < ApplicationController
 	    end
 	end
 
+	def get_handle
+		handle = User.find_by_user_id(params[:user_id]).handle
+		render :json => {:handle => handle}, :status => :ok
+	end
+
 end

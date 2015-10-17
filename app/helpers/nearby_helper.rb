@@ -77,7 +77,7 @@ module NearbyHelper
       else
         seed['labels'].append('plantedforme')
       end
-      seed['labels'].append('new') if !raw_seed['seen']
+      seed['labels'].append('new') if !seed['seen']
 
 
       result << seed

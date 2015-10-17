@@ -41,6 +41,7 @@ class UserController < ApplicationController
 
   def saw
     User.find_by(user_id:params[:user_id]).saw(params[:seed_id])
+    render :json => {:messages => "Saw"}, :status => :ok
   end
 
 	private

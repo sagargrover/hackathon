@@ -11,6 +11,10 @@ class Seed < ActiveRecord::Base
     Label.where(seed_id:id).pluck(:label)
   end
 
+  def self.labelled label
+    joins("inner join labels on seed_id=seeds.id").where("labels.label='#{label}'").select("seeds.*")
+  end
+
   def creator_handle
     User.find_by(user_id:creator_id).handle
   end

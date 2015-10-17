@@ -9,6 +9,9 @@ module NearbyHelper
     my_loc  =  "ST_SetSRID(ST_GeomFromText('%s'),4326)" % [my_loc]
 
     viewport = "ST_SetSRID(ST_MakeBox2D(%s,%s),4326)" % [bounds_ne,bounds_sw]
+    if bounds_ne.include? 'POINT(0.0 0.0)'
+      viewport = "ST_Buffer(%s,0.00659256611421917)" % [my_loc]
+    end
     range_condition = "ST_Intersects(coordinates,%s)" % [viewport]
     
     range_seeds = Seed.where(range_condition)

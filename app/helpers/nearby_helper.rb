@@ -60,7 +60,9 @@ module NearbyHelper
       lng = raw_seed.lng
       
       seed['address'] = address_builder(lat,lng)
-      seed['taglist'] = raw_seed.taghandles
+      # Remove this when FrontEnd realizes it's better to leave creator_handle in there
+      seed['taglist'] = raw_seed.taghandles-[raw_seed.creator_handle]
+      seed['labels'] = raw_seed.labels
       seed['posted_by'] = raw_seed.creator_handle
       seed['seen'] = raw_seed.viewers.exists?(:user_id=>user_id)
 

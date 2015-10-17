@@ -7,6 +7,10 @@ class Seed < ActiveRecord::Base
     Tag.joins("inner join users on tagged_user_id=user_id").where(seed_id:self.id).pluck(:handle)
   end
 
+  def labels
+    Label.where(seed_id:id).pluck(:label)
+  end
+
   def creator_handle
     User.find_by(user_id:creator_id).handle
   end

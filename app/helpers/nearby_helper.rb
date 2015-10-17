@@ -47,7 +47,7 @@ module NearbyHelper
     rev_geocode = Net::HTTP.get_response URI(url)
     rev_geocode = JSON.parse(rev_geocode.body)
     addr=[]
-    ['sublocality','locality','housing_region','city','state'].each do |entity|
+    ['sublocality','locality'].each do |entity|
     addr<<rev_geocode[entity]['name'] if rev_geocode.keys.include? entity
     end
     return addr.join(', ')
@@ -59,7 +59,7 @@ module NearbyHelper
       seed=Hash.new
       puts raw_seed.attributes
       seed.merge!(raw_seed.attributes.slice('id','lat','lng','title','url','likes','dislikes',
-                                            'is_public','nearby','distance'))
+                                            'public','nearby','distance'))
       
       lat = raw_seed.lat
       lng = raw_seed.lng
@@ -67,9 +67,18 @@ module NearbyHelper
       seed['address'] = address_builder(lat,lng)
       # Remove this when FrontEnd realizes it's better to leave creator_handle in there
       seed['taglist'] = raw_seed.taghandles-[raw_seed.creator_handle]
-      seed['labels'] = raw_seed.labels
+
       seed['posted_by'] = raw_seed.creator_handle
       seed['seen'] = raw_seed.viewers.exists?(:user_id=>user_id)
+
+      seed['labels'] = raw_seed.labels
+      if raw_seed['public']
+        seed['labels'].append('public')
+      else
+        seed['labels'].append('plantedforme')
+      end
+      seed['labels'].append('new') if !raw_seed['seen']
+
 
       result << seed
     end

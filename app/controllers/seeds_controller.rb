@@ -50,7 +50,9 @@ class SeedsController < ApplicationController
     my_loc=params_json['loc']
     bounds_ne=params_json['ne']
     bounds_sw=params_json['sw']
-    resp,status=nearby_seeds(user_id,my_loc,bounds_ne,bounds_sw)
+    labels=params_json.has_key?['labels']? params_json['params'] : []
+
+    resp,status=nearby_seeds(user_id,my_loc,bounds_ne,bounds_sw,labels)
     process_response(resp, status, params)
 	end
 

@@ -3,7 +3,7 @@ module NearbyHelper
   REGIONS_URL = "http://harmans.housing.com:3001/"
   LISTENING_RADIUS = 300
 
-  def nearby_seeds user_id,my_loc,bounds_ne,bounds_sw
+  def nearby_seeds user_id,my_loc,bounds_ne,bounds_sw,labels=[]
     bounds_ne  =  "ST_GeomFromText('%s')" % [bounds_ne]
     bounds_sw  =  "ST_GeomFromText('%s')" % [bounds_sw]
     my_loc  =  "ST_SetSRID(ST_GeomFromText('%s'),4326)" % [my_loc]
@@ -12,11 +12,17 @@ module NearbyHelper
     range_condition = "ST_Intersects(coordinates,%s)" % [viewport]
     
     range_seeds = Seed.where(range_condition)
+
+    # logic is for union of labels, not intersection
+    label_list = labels.map {|l| "'"+l+"'" }.join(",").to_s
+    label_condition = "id in (select distinct seed_id from labels where label in (%s))" % [label_list]
+
+    labelled_seeds = labels.empty? ? range_seeds : range_seeds.where(label_condition)
     
     tagged_condition = "id in (select seed_id from tags where tagged_user_id = '%s')" % [user_id]
     visible_condition = "is_public or %s" % [tagged_condition]
     
-    result_seeds = range_seeds.where(visible_condition)
+    result_seeds = labelled_seeds.where(visible_condition)
 
     distance = "ST_Distance(ST_Transform(coordinates,3785),ST_Transform(%s,3785))" % [my_loc]
 
@@ -54,7 +60,9 @@ module NearbyHelper
       lng = raw_seed.lng
       
       seed['address'] = address_builder(lat,lng)
+      # Remove this when FrontEnd realizes it's better to leave creator_handle in there
       seed['taglist'] = raw_seed.taghandles-[raw_seed.creator_handle]
+      seed['labels'] = raw_seed.labels
       seed['posted_by'] = raw_seed.creator_handle
       seed['seen'] = raw_seed.viewers.exists?(:user_id=>user_id)
 

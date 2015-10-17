@@ -31,6 +31,13 @@ class Seed < ActiveRecord::Base
     increment!(:nays)
   end
 
+  def add_label label
+    newlabel = Label.new
+    newlabel.seed_id = id
+    newlabel.label = label
+    newlabel.save!
+  end
+
   def self.yay
     self.find_each do |seed|
       seed.increment!(:yays)
@@ -43,7 +50,7 @@ class Seed < ActiveRecord::Base
     end
   end
 
-  def self.register user_id, fb_auth_id, tag_ids, lat, lng, title, seed_type
+  def self.register user_id, fb_auth_id, tag_ids, lat, lng, title, seed_type, labels=[]
     link = SecureRandom.hex(10)
     user = User.find_by_user_id(user_id)
     if user.auth_token != fb_auth_id
@@ -74,6 +81,9 @@ class Seed < ActiveRecord::Base
           tag.tagger_user_id = user_id
           tag.save!
         end
+      end
+      labels.each do |l|
+        seed.add_label l
       end
     end
     return link, 1

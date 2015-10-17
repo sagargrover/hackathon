@@ -50,8 +50,7 @@ class Seed < ActiveRecord::Base
     end
   end
 
-  def self.register user_id, fb_auth_id, tag_ids, lat, lng, title, seed_type, labels=[]
-    link = SecureRandom.hex(10)
+  def self.register user_id, fb_auth_id, link, tag_ids, lat, lng, title, seed_type, labels=[]
     user = User.find_by_user_id(user_id)
     if user.auth_token != fb_auth_id
       return "Wrong authentication", 0

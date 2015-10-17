@@ -69,7 +69,7 @@ module NearbyHelper
       a=raw_seed.creator_handle rescue ""
       seed['taglist'] = raw_seed.taghandles-[a]
 
-      seed['posted_by'] = raw_seed.creator_handle
+      seed['posted_by'] = raw_seed.creator_handle rescue ""
       seed['seen'] = raw_seed.viewers.exists?(:user_id=>user_id)
 
       seed['labels'] = raw_seed.labels

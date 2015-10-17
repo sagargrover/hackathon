@@ -31,13 +31,12 @@ ActiveRecord::Schema.define(version: 20151017001817) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "creator_id"
+    t.spatial  "coordinates", limit: {:srid=>4326, :type=>"point"}
     t.integer  "yays",                                              default: 0
     t.integer  "nays",                                              default: 0
-    t.spatial  "coordinates", limit: {:srid=>4326, :type=>"point"}
   end
 
-  create_table "seens", id: false, force: true do |t|
-    t.integer  "id",         default: 0, null: false
+  create_table "seens", force: true do |t|
     t.integer  "seed_id"
     t.datetime "created_at"
     t.datetime "updated_at"

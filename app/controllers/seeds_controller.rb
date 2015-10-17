@@ -16,12 +16,12 @@ class SeedsController < ApplicationController
   } 
 =end
   def register
-    labels=params.has_key?('labels') ? params_json[:labels] : []
+    labels=params.has_key?('labels') ? params[:labels] : []
     url, status = Seed.register params[:user_id], params[:fb_auth_id], params[:url], params[:tag_ids], params[:lat], params[:lng], params[:title], params[:seed_type], labels
     if status == 1
-      render :json => {:url => url}, :status => 200
+      render :json => {:message => "Saved"}, :status => 200
     else
-      render :json => {:url => "Problem"}, :status => 402
+      render :json => {:message => "Problem"}, :status => 402
     end
   end
 

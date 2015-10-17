@@ -7,7 +7,7 @@ class UserController < ApplicationController
     if flag == 1
       render :json => {:messages => "Saved"}, :status => :ok
 	  else
-	    render :json => {:messages => "Not Saved"}, :status => 422
+	    render :json => {:messages => "Not Saved"}, :status => :ok
 	  end
 	end
 
@@ -27,7 +27,7 @@ class UserController < ApplicationController
 	end
 
   def suggest
-    return process_response([],200,params) if params[:input].count=0
+    #return process_response([],200,params) if params[:input].length==0
     pattern='%s%' % [params[:input]]
     ilike="handle ilike '%s'" % [pattern]
     hits=User.where(ilike).select('user_id,name,handle').order(:handle).limit(5)

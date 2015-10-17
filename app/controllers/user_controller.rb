@@ -29,6 +29,7 @@ class UserController < ApplicationController
     pattern='%s%' % [params[:input]]
     ilike="handle ilike '%s'" % [pattern]
     hits=User.where(ilike).select('user_id,name,handle').order(:handle).limit(5)
+    puts hits.to_json
     process_response(hits,200,params)
   end
 

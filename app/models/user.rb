@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def seen
-    Seed.joins("inner join seens on seeds.seed_id=seens.seeds_id").where("seens.user_id=#{user_id}").select("seeds.*")
+    Seed.joins("inner join seens on seeds.seed_id=seens.seeds_id").where("seens.user_id='#{user_id}'").select("seeds.*")
   end
 
   def seencount

@@ -29,6 +29,7 @@ module NearbyHelper
     selection_with_nearby = "id,title,url,is_public as public,creator_id,
                 ST_Y(coordinates) as lat,
                 ST_X(coordinates) as lng,
+                yays as likes, nays as dislikes,
                 %s < #{LISTENING_RADIUS} as nearby,
                 %s as distance" % [distance, distance]
   
@@ -54,7 +55,8 @@ module NearbyHelper
     result_seeds_with_nearby.each do |raw_seed|
       seed=Hash.new
       puts raw_seed.attributes
-      seed.merge!(raw_seed.attributes.slice('id','lat','lng','title','url','is_public','nearby','distance'))
+      seed.merge!(raw_seed.attributes.slice('id','lat','lng','title','url','likes','dislikes',
+                                            'is_public','nearby','distance'))
       
       lat = raw_seed.lat
       lng = raw_seed.lng

@@ -9,15 +9,18 @@ class SeedsController < ApplicationController
     "user_id": "124",
     "fb_auth_id" : "123",
     "tag_ids" : [123,124],
+    "link" : "tattiurl",
     "lat": "20",
     "lng": "70",
     "title": "title",
-    "seed_type": "true"
+    "is_public": true,
+    "labels" : "happy,sad"
   } 
 =end
   def register
     labels=params.has_key?('labels') ? params[:labels] : []
-    url, status = Seed.register params[:user_id], params[:fb_auth_id], params[:url], params[:tag_ids], params[:lat], params[:lng], params[:title], params[:seed_type], labels
+    labels=labels.split(',').map(&:strip)
+    resp, status = Seed.register params[:user_id], params[:fb_auth_id], params[:link], params[:tag_ids], params[:lat], params[:lng], params[:title], params[:is_public], labels
     if status == 1
       render :json => {:message => "Saved"}, :status => 200
     else

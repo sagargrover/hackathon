@@ -3,7 +3,8 @@ class UserController < ApplicationController
 	def new_user
 		params_json = JSON.parse params["login_response"]
 		flag = User.create params_json['id'], params_json['access_token'], params_json['name']
-		if flag == 1
+		puts flag.to_json
+    if flag == 1
       render :json => {:messages => "Saved"}, :status => :ok
 	  else
 	    render :json => {:messages => "Not Saved"}, :status => 422

@@ -19,8 +19,9 @@ class SeedsController < ApplicationController
 =end
   def register
     labels=params.has_key?('labels') ? params[:labels] : []
-    labels=labels.split(',').map(&:strip)
-    resp, status = Seed.register params[:user_id], params[:fb_auth_id], params[:link], params[:tag_ids], params[:lat], params[:lng], params[:title], params[:is_public], labels
+    labels=labels.split(',').map(&:strip) rescue []
+    tag_ids=params[:tag_ids].split(',').map(&:strip) rescue []
+    resp, status = Seed.register params[:user_id], params[:fb_auth_id], params[:link], tag_ids, params[:lat], params[:lng], params[:title], params[:is_public], labels
     if status == 1
       render :json => {:message => "Saved"}, :status => 200
     else
@@ -48,7 +49,6 @@ class SeedsController < ApplicationController
     
 =end
 	def nearby
-		#resp, status = @api.nearby_seeds(params)
     key, value = params.first
     json = JSON.parse key
     user_id=json['user_id']

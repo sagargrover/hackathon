@@ -46,12 +46,13 @@ class SeedsController < ApplicationController
 =end
 	def nearby
 		#resp, status = @api.nearby_seeds(params)
-    params_json = JSON.parse params["login_response"]
-    user_id=params_json['user_id']
-    my_loc=params_json['loc']
-    bounds_ne=params_json['ne']
-    bounds_sw=params_json['sw']
-    labels=params_json.has_key?('labels') ? params_json['labels'] : []
+    key, value = params.first
+    json = JSON.parse key
+    user_id=json['user_id']
+    my_loc=json['loc']
+    bounds_ne=json['ne']
+    bounds_sw=json['sw']
+    labels=json.has_key?('labels') ? json['labels'] : []
 
     resp,status=nearby_seeds(user_id,my_loc,bounds_ne,bounds_sw,labels)
     process_response(resp, status, params)
